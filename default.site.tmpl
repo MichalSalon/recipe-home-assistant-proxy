@@ -1,0 +1,17 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
+    root {{.DocumentRoot}};
+
+    large_client_header_buffers 4 32k;
+
+    location / {
+        include /etc/nginx/conf.d/proxy.conf;
+        proxy_pass http://{{.Environment.HA_ADDRESS}};
+    }
+
+    access_log syslog:server=unix:/dev/log,facility=local1,tag=nginx,severity=info default_short;
+    error_log syslog:server=unix:/dev/log,facility=local1,tag=nginx,severity=error;
+}

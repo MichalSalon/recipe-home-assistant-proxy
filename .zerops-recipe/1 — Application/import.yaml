@@ -1,0 +1,14 @@
+project:
+  name: Home Assistant
+  description: Project connected to personal Home Assistant instance via a VPN
+  tags:
+    - home-assistant
+
+services:
+  - hostname: ha
+    type: ubuntu/nginx@1.22
+    buildFromGit: https://github.com/MichalSalon/recipe-home-assistant-proxy
+    enableSubdomainAccess: true
+    maxContainers: 1
+    envSecrets:
+      HA_ADDRESS: 10.2.164.3:8123

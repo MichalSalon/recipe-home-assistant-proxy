@@ -1,0 +1,12 @@
+zerops:
+  - setup: ha
+    build:
+      addToRunPrepare:
+        - proxy.conf
+      deployFiles:
+        - default.site.tmpl
+    run:
+      base: ubuntu/nginx@latest
+      prepareCommands:
+        - sudo mv ./proxy.conf /etc/nginx/conf.d/proxy.conf
+      siteConfigPath: default.site.tmpl
